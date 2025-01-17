@@ -169,20 +169,6 @@ class ProductListViewController: UIViewController {
         filterStackView.addArrangedSubview(filterLabel)
         filterStackView.addArrangedSubview(buttonContainer)
         
-        filterButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -16).isActive = true
-        filterButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor).isActive = true
-        filterButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor).isActive = true
-        filterButton.widthAnchor.constraint(equalToConstant: (view.frame.width / 2 - 30)).isActive = true
-        
-        filterLabel.leadingAnchor.constraint(equalTo: filterStackView.leadingAnchor, constant: 16).isActive = true
-        filterLabel.bottomAnchor.constraint(equalTo: filterStackView.bottomAnchor, constant: -10).isActive = true
-        filterLabel.topAnchor.constraint(equalTo: filterStackView.topAnchor, constant: 10).isActive = true
-        filterLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        buttonContainer.trailingAnchor.constraint(equalTo: filterStackView.trailingAnchor, constant: -16).isActive = true
-        buttonContainer.bottomAnchor.constraint(equalTo: filterStackView.bottomAnchor, constant: -10).isActive = true
-        buttonContainer.topAnchor.constraint(equalTo: filterStackView.topAnchor, constant: 10).isActive = true
-        
         filterButton.addTarget(self, action: #selector(openFilterModal), for: .touchUpInside)
         
         // Auto Layout kısıtlamalarını ekliyoruz
@@ -190,7 +176,21 @@ class ProductListViewController: UIViewController {
             filterStackView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             filterStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             filterStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            filterStackView.heightAnchor.constraint(equalToConstant: 60)
+            filterStackView.heightAnchor.constraint(equalToConstant: 60),
+            
+            filterButton.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor, constant: -16),
+            filterButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
+            filterButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            filterButton.widthAnchor.constraint(equalToConstant: (view.frame.width / 2 - 30)),
+            
+            filterLabel.leadingAnchor.constraint(equalTo: filterStackView.leadingAnchor, constant: 16),
+            filterLabel.bottomAnchor.constraint(equalTo: filterStackView.bottomAnchor, constant: -10),
+            filterLabel.topAnchor.constraint(equalTo: filterStackView.topAnchor, constant: 10),
+            filterLabel.widthAnchor.constraint(equalToConstant: 100),
+            
+            buttonContainer.trailingAnchor.constraint(equalTo: filterStackView.trailingAnchor, constant: -16),
+            buttonContainer.bottomAnchor.constraint(equalTo: filterStackView.bottomAnchor, constant: -10),
+            buttonContainer.topAnchor.constraint(equalTo: filterStackView.topAnchor, constant: 10),
         ])
     }
     

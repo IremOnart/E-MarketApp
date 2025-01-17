@@ -127,7 +127,7 @@ class FavoritesViewController: UIViewController {
     }
     
     func setCartEmtpyPopUp() {
-        let alertController = UIAlertController(title: "empty is cart", message: "Add Product to Your Cart", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Favorites is cart", message: "Add your favorites please!", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Okay", style: .default)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)

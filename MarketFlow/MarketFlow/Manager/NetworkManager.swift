@@ -7,7 +7,11 @@
 
 import Foundation
 
-class NetworkManager {
+protocol NetworkManagerProtocol {
+    func request<T: Decodable>(_ url: URL, method: String, body: Data?, completion: @escaping (Result<T, Error>) -> Void)
+}
+
+class NetworkManager: NetworkManagerProtocol {
     
     static let shared = NetworkManager()
     
