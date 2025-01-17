@@ -22,7 +22,7 @@ protocol ProductListViewModelProtocol {
     var productsPerPage: Int { get set }
     var isLastPage: Bool { get set }
     
-    func fetchProducts() 
+    func fetchProducts()
     func productListItem(for indexPath: IndexPath) -> MarketProductElement
     func searchProducts(by searchText: String)
     func resetFilter()

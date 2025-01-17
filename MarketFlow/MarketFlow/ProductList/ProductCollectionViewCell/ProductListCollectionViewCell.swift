@@ -71,6 +71,8 @@ class ProductListCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var viewModel = ProductListCollectionViewCellViewModel()
+    
     // Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -148,10 +150,13 @@ class ProductListCollectionViewCell: UICollectionViewCell {
         productNameLabel.text = product.name
         
         // Favori durumu başlatmak için
-//        if let isFavoriteProduct = product.isFavorite {
-//            self.isFavorite = isFavoriteProduct
-//        }
+        if let productID = product.id {
+            self.isFavorite = CoreDataManager.shared.isFavoriteProduct(withID: productID)
+        } else {
+            self.isFavorite = false
+        }
     }
+
     
     // Add to Cart button tıklama işlevi
     @objc private func addToCartTapped() {
@@ -171,6 +176,8 @@ class ProductListCollectionViewCell: UICollectionViewCell {
         isFavorite.toggle()
         // Favori durumu değiştirilirse, güncelleme işlemi yapılabilir
 //        product?.isFavorite = isFavorite
+        viewModel.updateFavoriteStatus(productID: product?.id ?? "", name: product?.name ?? "", price: product?.price ?? "", image: product?.image, isFavorite: isFavorite)
+        NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
         print("Favori durumu: \(isFavorite ? "Favori" : "Favori Değil")")
     }
     

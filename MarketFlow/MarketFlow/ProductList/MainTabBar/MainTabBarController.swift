@@ -28,17 +28,22 @@ class MainTabBarController: UITabBarController {
         tabBar.layer.masksToBounds = false // Gölgenin taşmasını engellemek için false yapılmalı
         // View controller'ları oluşturun
         let productListVC = ProductListViewController()
-        let anotherVC = CartScreenViewController()  // Başka bir view controller, örneğin bir profil ekranı
+        let cartVC = CartScreenViewController()  // Başka bir view controller, örneğin bir profil ekranı
+        let favoritesVC = FavoritesViewController()
+        let favoritesVm = FavoritesViewModel()
+        favoritesVC.viewModel = favoritesVm
         
         // View controller'ları tab bar'a ekleyin
         let productListNav = UINavigationController(rootViewController: productListVC)
-        let anotherVCNav = UINavigationController(rootViewController: anotherVC)
+        let cartVCNav = UINavigationController(rootViewController: cartVC)
+        let favoritesVCNav = UINavigationController(rootViewController: favoritesVC)
         
         // Tab bar item'ları ekleyin
         productListVC.tabBarItem = UITabBarItem(title: "Products", image: UIImage(systemName: "house"), tag: 0)
-        anotherVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "cart"), tag: 1)
+        cartVCNav.tabBarItem = UITabBarItem(title: "Cart", image: UIImage(systemName: "cart"), tag: 1)
+        favoritesVCNav.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "star"), tag: 3)
         
         // Tab bar controller'a ekleyin
-        viewControllers = [productListNav, anotherVCNav]
+        viewControllers = [productListNav, cartVCNav, favoritesVCNav]
     }
 }

@@ -37,6 +37,7 @@ class ProductListViewModel: ProductListViewModelProtocol {
                        } else {
                            self.productList.append(contentsOf: products)
                            self.filteredProductList.append(contentsOf: products)
+                           SingletonModel.shared.productsInfos = self.productList
                            self.emit(change: .success)
                            print(self.filteredProductList.count)
                        }

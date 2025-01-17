@@ -41,7 +41,7 @@ class CoreDataManager {
     func addCartItem(id: String, name: String, price: Double, newQuantity: Int = 1) {
         let request: NSFetchRequest<CartInfos> = CartInfos.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-
+        
         do {
             let items = try context.fetch(request)
             
@@ -71,7 +71,7 @@ class CoreDataManager {
     func decreaseCartItemQuantity(id: String) {
         let request: NSFetchRequest<CartInfos> = CartInfos.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-
+        
         do {
             let items = try context.fetch(request)
             
@@ -92,8 +92,8 @@ class CoreDataManager {
             print("Failed to update or delete item: \(error)")
         }
     }
-
-
+    
+    
     
     func fetchCartItems() -> [CartInfos] {
         let request: NSFetchRequest<CartInfos> = CartInfos.fetchRequest()
@@ -105,20 +105,67 @@ class CoreDataManager {
         }
     }
     
-    func updateCartItemQuantity(id: UUID, newQuantity: Int) {
-        let request: NSFetchRequest<CartInfos> = CartInfos.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+    func updateFavoriteStatus(for productID: String, name: String?, price: String?, image: String?, isFavorite: Bool) {
+        let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", productID)
         
         do {
-            let items = try context.fetch(request)
-            if let item = items.first {
-                item.quantity = Int16(newQuantity)
-                saveContext()
+            let results = try context.fetch(fetchRequest)
+            if let favItem = results.first {
+                if isFavorite {
+                    // Eğer ürün zaten var ve isFavorite true ise güncelle
+                    favItem.name = name
+                    favItem.price = price
+                    favItem.image = image
+                    try context.save()
+                    print("Favori olarak güncellendi: \(productID)")
+                } else {
+                    // Eğer isFavorite false ise kaydı sil
+                    context.delete(favItem)
+                    try context.save()
+                    print("Favorilerden kaldırıldı: \(productID)")
+                }
+            } else if isFavorite {
+                // Ürün yoksa ve isFavorite true ise yeni bir kayıt oluştur
+                let newFavItem = Favorites(context: context)
+                newFavItem.id = productID
+                newFavItem.name = name
+                newFavItem.price = price
+                newFavItem.image = image
+                try context.save()
+                print("Favorilere eklendi: \(productID)")
             }
         } catch {
-            print("Failed to update item: \(error)")
+            print("Favori durumu güncellenirken hata oluştu: \(error)")
         }
     }
+    
+    func fetchFavoriteItems() -> [Favorites] {
+        let request: NSFetchRequest<Favorites> = Favorites.fetchRequest()
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Failed to fetch favorite items: \(error)")
+            return []
+        }
+    }
+    
+    func isFavoriteProduct(withID id: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            print(results)
+            print("Fetched results count: \(results.count)")
+            return !results.isEmpty
+        } catch let error as NSError {
+            print("Core Data fetch error: \(error), \(error.userInfo)")
+            return false
+        }
+        
+    }
+
 }
 
 extension Notification.Name {

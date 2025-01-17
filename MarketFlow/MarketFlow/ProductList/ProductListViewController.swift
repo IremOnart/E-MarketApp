@@ -58,8 +58,6 @@ class ProductListViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 29/255, green: 86/255, blue: 255/255, alpha: 1.0)
         attachViewModel()
         filteredProducts.append(contentsOf: viewModel?.filteredProductList ?? [])
-        print(viewModel?.filteredProductList)
-        print(filteredProducts)
     }
     
     // ViewModel'e changeHandler ekleyerek verilerdeki değişiklikleri dinle

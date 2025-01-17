@@ -32,5 +32,10 @@ final class MarketFlowTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testIsFavoriteProduct() {
+        let isFavorite = CoreDataManager.shared.isFavoriteProduct(withID: "1")
+        print("Is favorite: \(isFavorite)")
+    }
 
 }
